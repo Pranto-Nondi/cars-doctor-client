@@ -1,5 +1,5 @@
 module.exports = {
-  env: { browser: true, es2020: true, node:true },
+  env: { browser: true, es2020: true, node: true },
   extends: [
     'eslint:recommended',
     'plugin:react/recommended',
@@ -11,5 +11,16 @@ module.exports = {
   plugins: ['react-refresh'],
   rules: {
     'react-refresh/only-export-components': 'warn',
+    'react/prop-types': [
+      'error',
+      {
+        ignore: [],
+        customValidators: [],
+        skipUndeclared: false,
+        ignoreFunctionalComponents: true,
+       
+        skipPropsWithName: ['service'],
+      },
+    ],
   },
 }
