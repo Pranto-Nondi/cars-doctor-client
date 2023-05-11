@@ -1,7 +1,24 @@
 
-import { Link } from 'react-router-dom';
+import { Form, Link } from 'react-router-dom';
 import login from '../../assets/images/login/login.svg'
+import { useContext } from 'react';
+import { AuthContext } from '../../provider/AuthProvider';
 const Login = () => {
+    const { signIn } = useContext(AuthContext)
+    const handleLogin = event => {
+        event.preventDefault();
+        const form = event.target;
+        const email = form.email.value;
+        const password = form.password.value;
+        console.log(email, password)
+        signIn(email, password)
+            .then(result => {
+                const user = result.user;
+                console.log(user);
+            })
+            .catch(error => console.log(error));
+    }
+
     return (
         <div className='container mb-5 mt-5 mx-auto'>
             <div className="hero min-h-screen bg-base-300">
@@ -13,25 +30,27 @@ const Login = () => {
                     <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
                         <div className="card-body">
                             <h1 className="text-5xl font-bold">Login now!</h1>
-                            
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">Email</span>
-                                </label>
-                                <input type="text" placeholder="email" className="input input-bordered" />
-                            </div>
-                            <div className="form-control">
-                                <label className="label">
-                                    <span className="label-text">ConfirmPassword</span>
-                                </label>
-                                <input type="password" placeholder="password" className="input input-bordered" />
-                                <label className="label">
-                                    <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
-                                </label>
-                            </div>
-                            <div className="form-control mt-6">
-                                <button className="btn btn-primary">Login</button>
-                            </div>
+
+                            <Form onSubmit={handleLogin} >
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text">Email</span>
+                                    </label>
+                                    <input type="text" name='email' placeholder="email" className="input input-bordered" />
+                                </div>
+                                <div className="form-control">
+                                    <label className="label">
+                                        <span className="label-text">ConfirmPassword</span>
+                                    </label>
+                                    <input type="password" name='password' placeholder="password" className="input input-bordered" />
+                                    <label className="label">
+                                        <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
+                                    </label>
+                                </div>
+                                <div className="form-control mt-6">
+                                    <button className="btn btn-primary">Login</button>
+                                </div>
+                            </Form>
                             <div className='text-center'>
                                 <p>Have an Account?<Link className='text-red-500' to='/signUp' >SignUP</Link></p>
                             </div>
