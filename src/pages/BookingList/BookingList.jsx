@@ -49,6 +49,7 @@ const BookingList = () => {
                     const remain = bookings?.filter(booking => booking._id !== id)
                     const updated = bookings?.find(booking => booking._id === id)
                     updated.status = 'confirm'
+                    console.log(updated)
                     const newBookings = [updated, ...remain];
                     setBookings(newBookings)
 
