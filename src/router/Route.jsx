@@ -4,7 +4,9 @@ import Home from "../pages/Home/Home/Home"
 import SignUp from "../pages/SignUp/SignUp"
 import Login from "../pages/Login/Login"
 import BookingService from "../pages/Booking/BookingService"
+import PrivateRoute from "./PrivateRoute"
 import BookingList from "../pages/BookingList/BookingList"
+
 
 const router = createBrowserRouter([
     {
@@ -31,7 +33,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/bookings',
-                element: <BookingList />
+                element: <PrivateRoute><BookingList /></PrivateRoute>
             }
         ]
     },

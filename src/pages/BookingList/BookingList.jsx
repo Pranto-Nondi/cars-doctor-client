@@ -4,7 +4,7 @@ import BookingTable from './BookingTable';
 
 
 const BookingList = () => {
-    const { user } = useContext(AuthContext)
+    const { user, loading, setLoading } = useContext(AuthContext)
     const [bookings, setBookings] = useState([])
     const url = `http://localhost:5000/bookings?email=${user?.email}`
     useEffect(() => {
@@ -19,9 +19,10 @@ const BookingList = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                if (data.deletedCount > 0) {
-                    const remain = bookings.filter(booking => booking._id !== id)
+                if (data?.deletedCount > 0) {
+                    const remain = bookings?.filter(booking => booking._id !== id)
                     setBookings(remain)
+                    setLoading(false)
                 }
             })
     }
@@ -36,19 +37,22 @@ const BookingList = () => {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                if (data.modifiedCount > 0) {
-                    const remain = bookings.filter(booking => booking._id !== id)
-                    const updated = bookings.find(booking => booking._id === id)
+                if (data?.modifiedCount > 0) {
+                    const remain = bookings?.filter(booking => booking._id !== id)
+                    const updated = bookings?.find(booking => booking._id === id)
                     updated.status = 'confirm'
                     const newBookings = [updated, ...remain];
                     setBookings(newBookings)
+                    setLoading(false)
                 }
             })
     }
-    
+
     return (
         <div>
-            <h2 className="text-5xl">Your bookings: {bookings.length}</h2>
+            <h2 className="text-5xl">Your bookings: {
+                !loading &&
+                bookings?.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>

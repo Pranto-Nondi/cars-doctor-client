@@ -19,7 +19,7 @@ const AuthProvider = ({ children }) => {
         return signOut(auth)
     }
     const authInfo = {
-        user, createUser, signIn, logOut
+        user, createUser, signIn, logOut, loading
     }
     useEffect(() => {
         const unsubsCribe = onAuthStateChanged(auth, user => {
