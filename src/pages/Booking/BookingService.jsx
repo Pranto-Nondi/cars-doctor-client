@@ -4,7 +4,7 @@ import { AuthContext } from '../../provider/AuthProvider';
 
 const BookingService = () => {
     const service = useLoaderData()
-    console.log(service)
+    // console.log(service)
     const { title, _id, price, img } = service
     const { user } = useContext(AuthContext)
     const handleBookService = event => {
