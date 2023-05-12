@@ -4,14 +4,21 @@ import BookingTable from './BookingTable';
 
 
 const BookingList = () => {
-    const { user, loading, setLoading } = useContext(AuthContext)
+    const [loader, setLoader] = useState(false)
+    const { user } = useContext(AuthContext)
     const [bookings, setBookings] = useState([])
     const url = `http://localhost:5000/bookings?email=${user?.email}`
     useEffect(() => {
+        setLoader(true)
         fetch(url)
             .then(res => res.json())
-            .then(data => setBookings(data))
+            .then(data => {
+                setBookings(data)
+                setLoader(false)
+            })
+
     }, [url])
+
     const handleDelete = (id) => {
         fetch(`http://localhost:5000/bookings/${id}`, {
             method: "DELETE"
@@ -22,7 +29,8 @@ const BookingList = () => {
                 if (data?.deletedCount > 0) {
                     const remain = bookings?.filter(booking => booking._id !== id)
                     setBookings(remain)
-                    setLoading(false)
+
+                    setLoader(false)
                 }
             })
     }
@@ -43,15 +51,21 @@ const BookingList = () => {
                     updated.status = 'confirm'
                     const newBookings = [updated, ...remain];
                     setBookings(newBookings)
-                    setLoading(false)
+
+                    setLoader(false)
                 }
             })
+    }
+
+
+    if (loader) {
+        return <progress className="progress w-56"></progress>
     }
 
     return (
         <div>
             <h2 className="text-5xl">Your bookings: {
-                !loading &&
+                !loader &&
                 bookings?.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table w-full">
