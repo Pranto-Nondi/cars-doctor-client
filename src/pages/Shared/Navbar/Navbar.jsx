@@ -16,7 +16,7 @@ const Navbar = () => {
     }
     const navItems = <>
         <li className='pb-2 pl-2'><Link to='/'> Home</Link></li>
-        <li className='pb-2 pl-2'><Link to='about' >About</Link></li>
+        <li className='pb-2 pl-2'><Link  >About</Link></li>
         {
             loading && !user && <li className='pb-2 pl-2'><Link to='/login'>Login</Link></li>
         }
@@ -30,8 +30,8 @@ const Navbar = () => {
         }
 
         {!loading && user?.email && <>
-            <li><Link to='/bookings' >My Bookings</Link></li>
-            <li onClick={handelLogOut} className='pb-2 pl-2'><Link>LogOut</Link></li>
+            <li className='pb-2 pl-2'><Link to='/bookings' >My Bookings</Link></li>
+            <li  onClick={handelLogOut} className='pb-2 pl-2'><Link>LogOut</Link></li>
         </>
         }
 

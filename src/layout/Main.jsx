@@ -4,7 +4,6 @@ import Navbar from '../pages/Shared/Navbar/Navbar';
 import { RotatingLines } from 'react-loader-spinner'
 import { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
-
 const Main = () => {
     const { user } = useContext(AuthContext)
 
@@ -14,7 +13,8 @@ const Main = () => {
         if (user) {
             setTimeout(() => {
                 setIsLoading(false);
-            }, 500);
+            }, 200);
+
         }
 
     }, [user]);

@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 import BookingTable from './BookingTable';
 import { useNavigate } from 'react-router-dom';
+import { RotatingLines } from 'react-loader-spinner';
 
 
 const BookingList = () => {
@@ -9,6 +10,7 @@ const BookingList = () => {
     const { user } = useContext(AuthContext)
     const [bookings, setBookings] = useState([])
     const navigate = useNavigate()
+
     const url = `https://cars-doctor-server-nine.vercel.app/bookings?email=${user?.email}`
     useEffect(() => {
         setLoader(true)
@@ -32,7 +34,7 @@ const BookingList = () => {
 
             })
 
-    }, [url,navigate])
+    }, [url, navigate])
 
     const handleDelete = (id) => {
         fetch(`https://cars-doctor-server-nine.vercel.app/bookings/${id}`, {
@@ -75,14 +77,20 @@ const BookingList = () => {
 
 
     if (loader) {
-        return <progress className="progress w-56"></progress>
+        return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '80vh' }}>
+            <RotatingLines
+                strokeColor="grey"
+                strokeWidth="5"
+                animationDuration="0.75"
+                width="96"
+                visible={true}
+            />
+        </div>
     }
 
     return (
+
         <div>
-            <h2 className="text-5xl">Your bookings: {
-                !loader &&
-                bookings?.length}</h2>
             <div className="overflow-x-auto">
                 <table className="table w-full">
                     <thead>
