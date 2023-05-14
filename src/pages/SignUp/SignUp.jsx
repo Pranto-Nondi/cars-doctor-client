@@ -1,10 +1,13 @@
 
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import signUp from '../../assets/images/login/login.svg'
 import { useContext } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 const SignUp = () => {
-    const { createUser } = useContext(AuthContext)
+    const { createUser, googleSignIn, logOut } = useContext(AuthContext)
+    const navigate = useNavigate()
+    const location = useLocation()
+    const from = location.state?.from?.pathname || "/"
     const handleSignUp = event => {
         event.preventDefault();
         const form = event.target;
@@ -15,10 +18,27 @@ const SignUp = () => {
         createUser(email, password)
             .then(result => {
                 const user = result.user;
-                console.log(user)
+                // console.log(user)
+                logOut()
+                    .then(result => {
+                       
+                    })
+                    .catch(err => {
+                        console.log(err.message)
+                    })
+                navigate('/login')
             })
             .catch(error => console.log(error))
 
+    }
+    const handelGoogleSignIn = () => {
+        googleSignIn()
+            .then(result => {
+                navigate(from, { replace: true });
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
     }
 
     return (
@@ -60,6 +80,13 @@ const SignUp = () => {
                             </form>
                             <div className='text-center'>
                                 <p>Already have an account?<Link className='text-red-500' to='/login' >Login</Link></p>
+                            </div>
+
+                            <div className="divider">OR</div>
+                            <div className='text-center'>
+                                <button onClick={handelGoogleSignIn} className="btn btn-circle  ">
+                                    <p> G</p>
+                                </button>
                             </div>
                         </div>
                     </div>

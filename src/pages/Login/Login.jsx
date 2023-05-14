@@ -4,7 +4,7 @@ import login from '../../assets/images/login/login.svg'
 import { useContext } from 'react';
 import { AuthContext } from '../../provider/AuthProvider';
 const Login = () => {
-    const { signIn } = useContext(AuthContext)
+    const { signIn, googleSignIn } = useContext(AuthContext)
     const location = useLocation()
     const navigate = useNavigate()
     const from = location.state?.from?.pathname || "/"
@@ -18,27 +18,20 @@ const Login = () => {
             .then(result => {
                 const user = result.user;
                 console.log(user);
+                navigate(from, { replace: true });
 
-                const loggedUser = {
-                    email: user.email
-                }
-                fetch(`http://localhost:5000/jwt`, {
-                    method: 'POST',
-                    headers: {
-                        'content-type': 'application/json'
-                    },
-                    body: JSON.stringify(loggedUser)
-                })
-                    .then(res => res.json())
-                    .then(data => {
-                        console.log(data)
-                        localStorage.setItem('car-access-token', data.token)
-                        navigate(from, { replace: true });
-                    })
             })
             .catch(error => console.log(error));
     }
-
+    const handelGoogleSignIn = () => {
+        googleSignIn()
+            .then(result => {
+                navigate(from, { replace: true });
+            })
+            .catch(err => {
+                console.log(err.message)
+            })
+    }
     return (
         <div className='container mb-5 mt-5 mx-auto'>
             <div className="hero min-h-screen bg-base-300">
@@ -73,6 +66,12 @@ const Login = () => {
                             </Form>
                             <div className='text-center'>
                                 <p>Have an Account?<Link className='text-red-500' to='/signUp' >SignUP</Link></p>
+                            </div>
+                            <div className="divider">OR</div>
+                            <div className='text-center'>
+                                <button onClick={handelGoogleSignIn} className="btn btn-circle  ">
+                                    <p> G</p>
+                                </button>
                             </div>
                         </div>
                     </div>
