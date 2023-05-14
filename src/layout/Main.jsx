@@ -11,16 +11,15 @@ const Main = () => {
 
     useEffect(() => {
         if (user) {
-            setTimeout(() => {
-                setIsLoading(false);
-            }, 200);
+            setIsLoading(false);
 
         }
+       
 
     }, [user]);
 
     return (
-        <div>
+        <>
             {isLoading ? (
                 <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
                     <RotatingLines
@@ -38,7 +37,8 @@ const Main = () => {
                     <Footer></Footer>
                 </>
             )}
-        </div>
+            
+        </>
     );
 
 };
