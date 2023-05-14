@@ -9,7 +9,7 @@ const BookingList = () => {
     const { user } = useContext(AuthContext)
     const [bookings, setBookings] = useState([])
     const navigate = useNavigate()
-    const url = `http://localhost:5000/bookings?email=${user?.email}`
+    const url = `https://cars-doctor-server-nine.vercel.app/bookings?email=${user?.email}`
     useEffect(() => {
         setLoader(true)
         fetch(url, {
@@ -35,7 +35,7 @@ const BookingList = () => {
     }, [url,navigate])
 
     const handleDelete = (id) => {
-        fetch(`http://localhost:5000/bookings/${id}`, {
+        fetch(`https://cars-doctor-server-nine.vercel.app/bookings/${id}`, {
             method: "DELETE"
         })
             .then(res => res.json())
@@ -50,7 +50,7 @@ const BookingList = () => {
             })
     }
     const handleBookingConfirm = (id) => {
-        fetch(`http://localhost:5000/bookings/${id}`, {
+        fetch(`https://cars-doctor-server-nine.vercel.app/bookings/${id}`, {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json'
