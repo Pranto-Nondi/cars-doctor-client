@@ -5,12 +5,12 @@ import { initializeApp } from "firebase/app";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyA_gqICSxJIn0YKwmFaTIlGOMI1P2F6k5Q",
-    authDomain: "cars-doctors-81c2a.firebaseapp.com",
-    projectId: "cars-doctors-81c2a",
-    storageBucket: "cars-doctors-81c2a.appspot.com",
-    messagingSenderId: "782193973398",
-    appId: "1:782193973398:web:eebd497648c28f1b780ab7"
+    apiKey: import.meta.env.VITE_apiKey,
+    authDomain: import.meta.env.VITE_authDomain,
+    projectId: import.meta.env.VITE_projectId,
+    storageBucket: import.meta.env.VITE_storageBucket,
+    messagingSenderId: import.meta.env.VITE_messagingSenderId,
+    appId: import.meta.env.VITE_appId
 };
 
 // Initialize Firebase

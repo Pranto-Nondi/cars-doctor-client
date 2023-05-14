@@ -4,7 +4,7 @@ import logo from '../../../assets/logo.svg'
 import { useContext } from 'react';
 import { AuthContext } from '../../../provider/AuthProvider';
 const Navbar = () => {
-    const { user, logOut } = useContext(AuthContext)
+    const { user, logOut, loading } = useContext(AuthContext)
     const handelLogOut = () => {
         logOut()
             .then(() => {
@@ -17,13 +17,21 @@ const Navbar = () => {
     const navItems = <>
         <li className='pb-2 pl-2'><Link to='/'> Home</Link></li>
         <li className='pb-2 pl-2'><Link to='about' >About</Link></li>
-        {user?.email ? <>
+
+        {
+            loading && <li className='pb-2 pl-2'><Link to='/login'>Login</Link></li>
+        }
+        {
+            !loading && !user && <li className='pb-2 pl-2'><Link to='/login'>Login</Link></li>
+        }
+        {!loading && user?.email && <>
             <li><Link to='/bookings' >My Bookings</Link></li>
             <li onClick={handelLogOut} className='pb-2 pl-2'><Link>LogOut</Link></li>
-        </> :
-            <li className='pb-2 pl-2'><Link to='/login'>Login</Link></li>
+        </>
         }
+       
     </>
+
     return (
         <div>
             <div className="navbar bg-base-100">
